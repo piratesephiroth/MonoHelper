@@ -180,11 +180,11 @@
 			{
 				outputWindowPane.OutputString("MonoHelper: Mono Installation Path is not set. Trying to get it from registry.\r\n");
 
-				RegistryKey openSubKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Wow6432Node\\Novell\\Mono");
+				RegistryKey openSubKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Wow6432Node\\Mono");
 
 				if (openSubKey == null)
 				{
-					openSubKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Novell\\Mono");
+					openSubKey = Registry.LocalMachine.OpenSubKey("SOFTWARE\\Mono");
 				}
 
 				if (openSubKey == null)
@@ -193,9 +193,8 @@
 						"Mono Runtime not found. Please install Mono and ensure that Mono Installation Path is set via Tools \\ Options \\ Mono Helper or that the necessary registry settings are existing.");
 				}
 
-				string value = openSubKey.GetSubKeyNames().OrderByDescending(x => x).First();
-				monoPath = (string)openSubKey.OpenSubKey(value).GetValue("SdkInstallRoot");
-			}
+				monoPath = (string)openSubKey.GetValue("SdkInstallRoot");
+            }
 
 			return monoPath;
 		}
